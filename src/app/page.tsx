@@ -71,7 +71,7 @@ const Home: NextPage = () => {
           </div>
           <div className="lg:w-1/2">
             <Image
-              src="/dshbd.png"
+              src="/bg.png"
               alt="Students using modern technology"
               className="rounded-2xl shadow-2xl animate-float"
               width={1500}

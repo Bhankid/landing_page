@@ -1,6 +1,8 @@
+"use client";
 
-import React from 'react';
-import { Check } from 'lucide-react';
+import React from "react";
+import { useRouter } from "next/navigation";
+import { Check } from "lucide-react";
 
 interface PricingPlanProps {
   name: string;
@@ -19,12 +21,21 @@ const PricingPlan: React.FC<PricingPlanProps> = ({
   popular,
   features,
 }) => {
+  const router = useRouter();
+
+  const amount =
+    price === "Free"
+      ? 0
+      : parseFloat(price.replace("GH₵ ", "").replace(",", ""));
+
+  const handleGetStarted = () => {
+    router.push(`/Payment?plan=${name}&amount=${amount}`);
+  };
+
   return (
     <div
       className={`relative bg-slate-800/50 backdrop-blur-lg p-8 rounded-2xl border ${
-        popular
-          ? 'border-blue-500/50 scale-105'
-          : 'border-slate-700/50'
+        popular ? "border-blue-500/50 scale-105" : "border-slate-700/50"
       } transition-all duration-300 hover:border-blue-500/50 hover:scale-105`}
     >
       {popular && (
@@ -38,9 +49,7 @@ const PricingPlan: React.FC<PricingPlanProps> = ({
         <h3 className="text-2xl font-bold mb-2">{name}</h3>
         <div className="mb-2">
           <span className="text-4xl font-bold">{price}</span>
-          {period && (
-            <span className="text-slate-400">{period}</span>
-          )}
+          {period && <span className="text-slate-400"> / {period}</span>}
         </div>
         <p className="text-slate-400">{description}</p>
       </div>
@@ -52,11 +61,15 @@ const PricingPlan: React.FC<PricingPlanProps> = ({
           </li>
         ))}
       </ul>
-      <button className={`w-full mt-8 px-6 py-3 rounded-full transition-all transform hover:scale-105 ${
-        popular
-          ? 'bg-blue-600 hover:bg-blue-700'
-          : 'border border-slate-600 hover:border-blue-500'
-      }`}>
+      <button
+        type="button"
+        className={`w-full mt-8 px-6 py-3 rounded-full transition-all transform hover:scale-105 ${
+          popular
+            ? "bg-blue-600 hover:bg-blue-700"
+            : "border border-slate-600 hover:border-blue-500"
+        }`}
+        onClick={handleGetStarted}
+      >
         Get Started
       </button>
     </div>

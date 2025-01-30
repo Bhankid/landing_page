@@ -1,4 +1,4 @@
-// pages/contact.tsx
+"use client";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
@@ -40,8 +40,8 @@ const Contact: NextPage = () => {
           <div className="text-center mb-16">
             <h1 className="text-4xl font-bold mb-4">Get in Touch</h1>
             <p className="text-lg text-slate-300 max-w-2xl mx-auto">
-              Have questions? We&apos;d love to hear from you. Send us a message and
-              we&apos;ll respond as soon as possible.
+              Have questions? We&apos;d love to hear from you. Send us a message
+              and we&apos;ll respond as soon as possible.
             </p>
           </div>
 

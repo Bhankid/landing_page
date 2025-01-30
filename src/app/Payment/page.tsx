@@ -13,7 +13,7 @@ const PaymentPage = () => {
   const plans = [
     { name: "Starter", amount: 0 },
     { name: "Professional", amount: 500 },
-    { name: "Enterprise", amount: 1000 }, // Example value for Enterprise
+    { name: "Enterprise", amount: 1000 },
   ];
 
   const [email, setEmail] = useState("");
@@ -31,6 +31,29 @@ const PaymentPage = () => {
   };
 
   const handlePayment = () => {
+    Swal.fire({
+      title: "Confirm Payment",
+      text: `You are about to pay GHS ${amountState} for the ${selectedPlan} plan. Proceed?`,
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#114CCBFF",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, proceed",
+      cancelButtonText: "No, cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        initiatePayment();
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Payment Canceled",
+          text: "You canceled the payment process.",
+        });
+      }
+    });
+  };
+
+  const initiatePayment = () => {
     const publicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY;
 
     if (!publicKey) {
@@ -78,10 +101,10 @@ const PaymentPage = () => {
             Swal.fire({
               icon: "error",
               title: "Payment Canceled",
-              text: "Payment was canceled.",
+              text: "You canceled the payment process.",
             });
           } else {
-            handlePayment();
+            initiatePayment();
           }
         });
       },

@@ -1,4 +1,5 @@
 "use client";
+
 import type { NextPage } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,13 +14,13 @@ interface NavigationProps {
 const Navigation: NextPage<NavigationProps> = ({}) => {
   // Use the props as needed
   const pathname = usePathname();
- const navItems = [
-   { path: "/", label: "Home" },
-   { path: "/Features", label: "Features" },
-   { path: "/Pricing", label: "Pricing" },
-   { path: "/About", label: "About" },
-   { path: "/Contact", label: "Contact" },
- ];
+  const navItems = [
+    { path: "/", label: "Home" },
+    { path: "/Features", label: "Features" },
+    { path: "/Pricing", label: "Pricing" },
+    { path: "/About", label: "About" },
+    { path: "/Contact", label: "Contact" },
+  ];
 
   return (
     <nav className="fixed w-full bg-slate-900/50 backdrop-blur-lg border-b border-slate-700/50 z-50">
@@ -48,6 +49,24 @@ const Navigation: NextPage<NavigationProps> = ({}) => {
             </button>
           </div>
         </div>
+      </div>
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-slate-900/50 backdrop-blur-lg border-t border-slate-700/50 p-4 flex justify-center space-x-2 z-50">
+        {navItems.map((item) => (
+          <Link
+            key={item.path}
+            href={item.path}
+            className={
+              pathname === item.path
+                ? "bg-slate-700 p-2 rounded-full text-blue-400"
+                : "bg-slate-700 p-2 rounded-full text-white hover:text-blue-400"
+            }
+          >
+            {item.label}
+          </Link>
+        ))}
+        <button className="bg-blue-600 p-2 rounded-full text-white hover:bg-blue-700">
+          Login
+        </button>
       </div>
     </nav>
   );

@@ -44,10 +44,10 @@ const Home: NextPage = () => {
       </Head>
 
       {/* Hero Section */}
-      <div className="container mx-auto px-6 pt-32 pb-20">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-          <div className="lg:w-1/2 space-y-8 animate-fade-in">
-            <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
+      <div className="container mx-auto px-6 pt-12 pb-10 md:pt-32 md:pb-20">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
+          <div className="md:w-1/2 space-y-8 animate-fade-in">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
               Next-Gen School Management
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-red-500">
                 {" "}
@@ -60,17 +60,17 @@ const Home: NextPage = () => {
             </p>
             <div className="flex space-x-4">
               <Link href="/Pricing">
-                <button className="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-full flex items-center space-x-2 transition-all transform hover:scale-105">
+                <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-full flex items-center space-x-2 transition-all transform hover:scale-105">
                   <span>Get Started</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </Link>
-              <button className="border border-red-500 hover:border-blue-600 px-8 py-3 rounded-full transition-all transform hover:scale-105">
+              <button className="border border-red-500 hover:border-blue-600 px-6 py-3 rounded-full transition-all transform hover:scale-105">
                 Watch Demo
               </button>
             </div>
           </div>
-          <div className="lg:w-1/2">
+          <div className="md:w-1/2">
             <Image
               src="/bg.png"
               alt="Students using modern technology"
@@ -83,8 +83,8 @@ const Home: NextPage = () => {
       </div>
 
       {/* Features Grid */}
-      <div className="container mx-auto px-6 py-20">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="container mx-auto px-6 py-10 md:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <FeatureCard
               key={index}

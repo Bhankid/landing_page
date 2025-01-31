@@ -65,9 +65,11 @@ const Home: NextPage = () => {
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </Link>
-              <button className="border border-red-500 hover:border-blue-600 px-6 py-3 rounded-full transition-all transform hover:scale-105">
-                Watch Demo
-              </button>
+              <Link href="/Gallery">
+                <button className="border border-red-500 hover:border-blue-600 px-6 py-3 rounded-full transition-all transform hover:scale-105">
+                  Watch Demo
+                </button>
+              </Link>
             </div>
           </div>
           <div className="md:w-1/2">

@@ -11,29 +11,65 @@ const PaymentPage = () => {
   const initialAmount = searchParams.get("amount") || "0";
 
   const plans = [
-    { name: "Starter", amount: 0 },
+    { name: "Starter", amount: null }, // Editable amount, require 1-10
     { name: "Professional", amount: 500 },
-    { name: "Enterprise", amount: 1000 },
+    { name: "Enterprise", amount: null }, // Editable amount
   ];
 
   const [email, setEmail] = useState("");
   const [selectedPlan, setSelectedPlan] = useState(initialPlan);
-  const [amountState, setAmount] = useState(parseFloat(initialAmount));
+  const [amountState, setAmount] = useState<string | number>(
+    initialPlan === "Enterprise" || initialPlan === "Starter"
+      ? ""
+      : parseFloat(initialAmount)
+  );
 
   const handlePlanChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedPlanName = e.target.value;
     setSelectedPlan(selectedPlanName);
 
     const selectedPlan = plans.find((plan) => plan.name === selectedPlanName);
-    if (selectedPlan) {
+
+    if (selectedPlan && selectedPlan.amount !== null) {
+      // If the plan has a predefined amount, set it
       setAmount(selectedPlan.amount);
+    } else {
+      // Allow user to manually enter the amount for editable plans
+      setAmount("");
     }
   };
 
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(e.target.value === "" ? "" : parseFloat(e.target.value));
+  };
+
   const handlePayment = () => {
+    const parsedAmount =
+      typeof amountState === "string" ? parseFloat(amountState) : amountState;
+
+    // Validate Free plan (Starter) amount between 1 and 10
+    if (selectedPlan === "Starter" && (parsedAmount < 1 || parsedAmount > 10)) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Amount",
+        text: "For the Free plan, please enter a value between 1 and 10.",
+      });
+      return;
+    }
+
+    // General validation for other plans
+    if (!parsedAmount || parsedAmount <= 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Amount",
+        text: "Please enter a valid amount to proceed with the payment.",
+      });
+      return;
+    }
+
     Swal.fire({
       title: "Confirm Payment",
-      text: `You are about to pay GHS ${amountState} for the ${selectedPlan} plan. Proceed?`,
+      text: `You are about to pay GHS ${parsedAmount} for the ${selectedPlan} plan. Proceed?`,
       icon: "info",
       showCancelButton: true,
       confirmButtonColor: "#114CCBFF",
@@ -42,7 +78,7 @@ const PaymentPage = () => {
       cancelButtonText: "No, cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        initiatePayment();
+        initiatePayment(parsedAmount);
       } else {
         Swal.fire({
           icon: "error",
@@ -53,7 +89,7 @@ const PaymentPage = () => {
     });
   };
 
-  const initiatePayment = () => {
+  const initiatePayment = (parsedAmount: number) => {
     const publicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY;
 
     if (!publicKey) {
@@ -68,7 +104,7 @@ const PaymentPage = () => {
     const paystack = new PaystackPop();
     paystack.newTransaction({
       key: publicKey,
-      amount: amountState * 100, // Convert to kobo
+      amount: parsedAmount * 100, // Convert to kobo
       email,
       metadata: {
         custom_fields: [
@@ -104,7 +140,7 @@ const PaymentPage = () => {
               text: "You canceled the payment process.",
             });
           } else {
-            initiatePayment();
+            initiatePayment(parsedAmount);
           }
         });
       },
@@ -162,8 +198,10 @@ const PaymentPage = () => {
             type="number"
             id="amount"
             value={amountState}
-            readOnly
+            onChange={handleAmountChange}
             className="w-full px-4 py-2 bg-slate-900/50 rounded-lg border border-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
+            disabled={selectedPlan === "Professional"} // Enable for Starter and Enterprise
+            required
           />
         </div>
 

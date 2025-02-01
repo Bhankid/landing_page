@@ -1,11 +1,31 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import PaystackPop from "@paystack/inline-js";
 import Swal from "sweetalert2";
 
-const PaymentPage = () => {
+interface PaystackResponse {
+  reference: string;
+}
+
+interface PaystackInstance {
+  newTransaction: (options: {
+    key: string;
+    amount: number;
+    email: string;
+    metadata: {
+      custom_fields: {
+        display_name: string;
+        variable_name: string;
+        value: string;
+      }[];
+    };
+    onSuccess: (response: PaystackResponse) => void;
+    onCancel: () => void;
+  }) => void;
+}
+
+const PaymentPage: React.FC = () => {
   const searchParams = useSearchParams();
   const initialPlan = searchParams.get("plan") || "Starter";
   const initialAmount = searchParams.get("amount") || "0";
@@ -16,13 +36,20 @@ const PaymentPage = () => {
     { name: "Enterprise", amount: null }, // Editable amount
   ];
 
-  const [email, setEmail] = useState("");
-  const [selectedPlan, setSelectedPlan] = useState(initialPlan);
+  const [email, setEmail] = useState<string>("");
+  const [selectedPlan, setSelectedPlan] = useState<string>(initialPlan);
   const [amountState, setAmount] = useState<string | number>(
     initialPlan === "Enterprise" || initialPlan === "Starter"
       ? ""
       : parseFloat(initialAmount)
   );
+  const [PaystackPop, setPaystackPop] = useState<PaystackInstance | null>(null);
+
+  useEffect(() => {
+    import("@paystack/inline-js").then((module) =>
+      setPaystackPop(new module.default())
+    );
+  }, []);
 
   const handlePlanChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedPlanName = e.target.value;
@@ -31,10 +58,8 @@ const PaymentPage = () => {
     const selectedPlan = plans.find((plan) => plan.name === selectedPlanName);
 
     if (selectedPlan && selectedPlan.amount !== null) {
-      // If the plan has a predefined amount, set it
       setAmount(selectedPlan.amount);
     } else {
-      // Allow user to manually enter the amount for editable plans
       setAmount("");
     }
   };
@@ -44,10 +69,18 @@ const PaymentPage = () => {
   };
 
   const handlePayment = () => {
+    if (!PaystackPop) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Payment module is still loading. Please wait a moment.",
+      });
+      return;
+    }
+
     const parsedAmount =
       typeof amountState === "string" ? parseFloat(amountState) : amountState;
 
-    // Validate Free plan (Starter) amount between 1 and 10
     if (selectedPlan === "Starter" && (parsedAmount < 1 || parsedAmount > 10)) {
       Swal.fire({
         icon: "error",
@@ -57,7 +90,6 @@ const PaymentPage = () => {
       return;
     }
 
-    // General validation for other plans
     if (!parsedAmount || parsedAmount <= 0) {
       Swal.fire({
         icon: "error",
@@ -101,8 +133,7 @@ const PaymentPage = () => {
       return;
     }
 
-    const paystack = new PaystackPop();
-    paystack.newTransaction({
+    PaystackPop?.newTransaction({
       key: publicKey,
       amount: parsedAmount * 100, // Convert to kobo
       email,
@@ -115,7 +146,7 @@ const PaymentPage = () => {
           },
         ],
       },
-      onSuccess: (response) => {
+      onSuccess: (response: PaystackResponse) => {
         Swal.fire({
           icon: "success",
           title: "Payment Successful",
@@ -200,7 +231,7 @@ const PaymentPage = () => {
             value={amountState}
             onChange={handleAmountChange}
             className="w-full px-4 py-2 bg-slate-900/50 rounded-lg border border-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
-            disabled={selectedPlan === "Professional"} // Enable for Starter and Enterprise
+            disabled={selectedPlan === "Professional"}
             required
           />
         </div>

@@ -74,7 +74,7 @@ const Navigation: NextPage<NavigationProps> = ({}) => {
               Contact
             </Link>
             <button className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-full transition-all transform hover:scale-105">
-              Login
+              Free Demo
             </button>
           </div>
         </div>

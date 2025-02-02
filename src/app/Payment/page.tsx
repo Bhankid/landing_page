@@ -184,65 +184,74 @@ const PaymentPage: React.FC = () => {
     });
   };
 
-  return (
-    <div className="container mx-auto px-6 pt-24 pb-20">
-      <div className="text-center mb-16">
-        <h1 className="text-4xl font-bold mb-4">Payment</h1>
-        <p className="text-lg text-slate-300 max-w-2xl mx-auto">
-          Please enter your email, select a plan, and proceed with payment.
-        </p>
-      </div>
-
-      <form>
-        <div className="mb-6">
-          <label htmlFor="email" className="block text-sm font-medium mb-2">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+    return (
+      <div className="container mx-auto px-6 pt-24 pb-20">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl font-bold mb-4">Payment</h1>
+          <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+            Please enter your email, select a plan, and proceed with payment.
+          </p>
         </div>
 
-        <div className="mb-6">
-          <label htmlFor="plan" className="block text-sm font-medium mb-2">
-            Select Plan
-          </label>
-          <select
-            id="plan"
-            value={selectedPlan}
-            onChange={handlePlanChange}
-            required
+        <form>
+          <div className="mb-6">
+            <label htmlFor="email" className="block text-sm font-medium mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2 bg-slate-900/50 rounded-lg border border-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
+              required
+            />
+          </div>
+
+          <div className="mb-6">
+            <label htmlFor="plan" className="block text-sm font-medium mb-2">
+              Select Plan
+            </label>
+            <select
+              id="plan"
+              value={selectedPlan}
+              onChange={handlePlanChange}
+              className="w-full px-4 py-2 bg-slate-900/50 rounded-lg border border-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
+              required
+            >
+              {plans.map((plan, index) => (
+                <option key={index} value={plan.name}>
+                  {plan.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mb-6">
+            <label htmlFor="amount" className="block text-sm font-medium mb-2">
+              Amount (GHS)
+            </label>
+            <input
+              type="number"
+              id="amount"
+              value={amountState}
+              onChange={handleAmountChange}
+              className="w-full px-4 py-2 bg-slate-900/50 rounded-lg border border-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
+              disabled={selectedPlan === "Professional"} // Enable for Starter and Enterprise
+              required
+            />
+          </div>
+
+          <button
+            type="button"
+            onClick={handlePayment}
+            className="w-full bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full transition-all transform hover:scale-105"
           >
-            {plans.map((plan, index) => (
-              <option key={index} value={plan.name}>
-                {plan.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="mb-6">
-          <label htmlFor="amount">Amount (GHS)</label>
-          <input
-            type="number"
-            id="amount"
-            value={amountState}
-            onChange={handleAmountChange}
-            disabled={selectedPlan === "Professional"}
-            required
-          />
-        </div>
-
-        <button type="button" onClick={handlePayment}>
-          Pay Now
-        </button>
-      </form>
-    </div>
-  );
+            Pay Now
+          </button>
+        </form>
+      </div>
+    );
 };
 
 // Disable SSR for this component

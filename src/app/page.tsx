@@ -44,7 +44,7 @@ const Home: NextPage = () => {
       </Head>
 
       {/* Hero Section */}
-      <div className="container mx-auto px-6 pt-12 pb-10 md:pt-32 md:pb-20">
+      <div className="container mx-auto px-6 pt-20 sm:pt-12 md:pt-32 pb-8 sm:pb-16 md:pb-20">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
           <div className="md:w-1/2 space-y-8 animate-fade-in">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">

@@ -71,7 +71,7 @@ const Features: NextPage = () => {
       </Head>
 
       <div className="pt-24 pb-20">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 md:px-8 lg:px-12 xl:px-16">
           <div className="text-center mb-16">
             <h1 className="text-4xl font-bold mb-4">
               Powerful Features for Modern Education
@@ -82,7 +82,7 @@ const Features: NextPage = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <FeatureCard
                 key={index}

@@ -36,7 +36,7 @@ const Contact: NextPage = () => {
       </Head>
 
       <div className="pt-24 pb-20">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 xl:px-10">
           <div className="text-center mb-16">
             <h1 className="text-4xl font-bold mb-4">Get in Touch</h1>
             <p className="text-lg text-slate-300 max-w-2xl mx-auto">
@@ -45,9 +45,9 @@ const Contact: NextPage = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
             {/* Contact Information */}
-            <div className="lg:col-span-1 space-y-8">
+            <div className="md:col-span-1 lg:col-span-1 space-y-8">
               <div className="bg-slate-800/50 backdrop-blur-lg p-6 rounded-2xl border border-slate-700/50">
                 <h2 className="text-xl font-semibold mb-6">
                   Contact Information
@@ -66,7 +66,7 @@ const Contact: NextPage = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="lg:col-span-2">
+            <div className="md:col-span-1 lg:col-span-2">
               <ContactForm />
             </div>
           </div>

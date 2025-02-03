@@ -38,7 +38,7 @@ const ContactForm: React.FC<ContactFormProps> = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-slate-800/50 backdrop-blur-lg p-8 rounded-2xl border border-slate-700/50"
+      className="bg-slate-800/50 backdrop-blur-lg p-8 rounded-2xl border border-slate-700/50 mx-auto"
     >
       <div className="grid md:grid-cols-2 gap-6 mb-6">
         <div>

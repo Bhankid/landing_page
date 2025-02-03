@@ -65,7 +65,7 @@ const Pricing: NextPage = () => {
             Choose the perfect plan for your institution&apos;s needs
           </p>
         </div>
-        <div className="grid md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-8 max-w-6xl mx-auto md:gap-10 lg:gap-12 xl:gap-16">
+        <div className="grid md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-12 max-w-6xl mx-auto md:gap-10 lg:gap-12 xl:gap-16 p-4 md:p-6 lg:p-8 xl:p-10">
           {plans.map((plan, index) => (
             <PricingPlan key={index} {...plan} />
           ))}

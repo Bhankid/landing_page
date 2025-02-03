@@ -19,8 +19,12 @@ const Navigation: NextPage<NavigationProps> = ({}) => {
       <div className="block md:flex bg-slate-900/50 backdrop-blur-lg border-b border-slate-700/50 px-6 py-4">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <School className="h-8 w-8 text-blue-600" />
-            <span className="text-xl font-bold">EduAdminPro</span>
+            <Link href="/">
+              <div className="flex items-center space-x-2">
+                <School className="h-8 w-8 text-blue-600" />
+                <span className="text-xl font-bold">EduAdminPro</span>
+              </div>
+            </Link>
           </div>
           <div className="hidden md:flex space-x-8">
             <Link

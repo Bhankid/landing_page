@@ -52,10 +52,10 @@ const Gallery: NextPage = () => {
       </Head>
 
       {/* Hero Section */}
-      <div className="container mx-auto px-6 pt-12 pb-10 md:pt-32 md:pb-20">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
+      <div className="container mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-20 lg:pt-40 lg:pb-24 xl:pt-48 xl:pb-28">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 lg:gap-16 xl:gap-20">
           <div className="md:w-1/2 space-y-8 animate-fade-in">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
               Gallery
             </h1>
             <p className="text-lg text-slate-300">
@@ -83,8 +83,8 @@ const Gallery: NextPage = () => {
       </div>
 
       {/* Image Grid */}
-      <div className="container mx-auto px-6 py-10 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="container mx-auto px-6 py-10 md:py-20 lg:py-24 xl:py-28">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10 lg:gap-12 xl:gap-16">
           {images.map((image, index) => (
             <div
               key={index}
@@ -116,12 +116,12 @@ const Gallery: NextPage = () => {
       </div>
 
       {/* Video Grid */}
-      <div className="container mx-auto px-6 py-10 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="container mx-auto px-6 py-10 md:py-20 lg:py-24 xl:py-28">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10 lg:gap-12 xl:gap-16">
           {videos.map((video, index) => (
             <div
               key={index}
-              className="bg-slate-800/50 backdrop-blur-lg p-1 rounded-2xl border border-slate-700/50 animate-fade-in-up delay-200"
+              className="bg-slate-800/ 50 backdrop-blur-lg p-1 rounded-2xl border border-slate-700/50 animate-fade-in-up delay-200"
             >
               <video
                 src={video.src}
